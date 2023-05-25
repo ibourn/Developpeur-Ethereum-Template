@@ -14,20 +14,24 @@ contract Parent {
 
 contract Child is Parent {
 
-    function getMyVar() external view returns(uint) {
+    function etMyVar() external view returns(uint) {
         return myVar;
     }
 }
 
 contract Caller {
-    Child child;   
-    
-    constructor(address _child) {
-        child = new Child(_child);
-    }
 
-    function getMyVar() external view returns(uint) {
-        return child.getMyVar();
+    //correction => fonctionne car on importe Child ou là ds le même fichier
+    Child cc = new Child();  //création d'une instance nouvelle de Child
+    // Child child;   
+    
+    // constructor(address _child) {
+    //     child = new Child(_child);
+    // }
+
+    function testMyVar(uint myVar) external view returns(uint) {
+        cc.setMyVar(myVar);
+        return cc.getMyVar();
     }
 }
 
