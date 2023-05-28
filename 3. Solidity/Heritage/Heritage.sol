@@ -23,6 +23,10 @@ contract Caller {
 
     //correction => fonctionne car on importe Child ou là ds le même fichier
     Child cc = new Child();  //création d'une instance nouvelle de Child
+    //un contrat est un type à part entière
+
+    //mais dif si appel contrat dejà déployé => là spécifier address
+
     // Child child;   
     
     // constructor(address _child) {
