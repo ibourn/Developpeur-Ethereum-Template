@@ -87,6 +87,8 @@ contract GuessAndWin is Ownable {
             guessers.pop();
         }
     }
+    //CORRECTION : use delete with array. Delete delete the array => size = 0 ([])
+    //it's different from delete with an index : in this case it's just the value that is set to 0 (index is freed) and so the need to pop
 
 }
      
