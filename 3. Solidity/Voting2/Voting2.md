@@ -70,8 +70,7 @@ b. I chose to use clones instead in order to circumvent these disadvantages, for
 - We need additionnal code to handle clones however less than all the changes and new functions needed for the previous operation.
 - Then a basic contract will be deployed but the clones will act as a proxy with their storage context.
 - Not needing a new iteration level, the cost of loops and different computations will note increase with each vote
-
-\*n'ayant pas besoin de nouveau niveau d'itération le coût de boucles et différents calculs n'augmentera pas à chaque noueau vote.
-
 - As we add more contracts, i try to decrease the deployment cost.
 - In that direction I modify the flow management by using a new 'incrementWorkflowStep()' function replacing all admin functions used to move to the next workflow status. A disadvantage is that each incrementation cost a little more gas (as only the admin can do these actions, voters are not impacted).
+
+// personal note : 3 \* 1/2 journée (1 doc/tests, 1 implementation : clone / heritage.. and correction/tests)

@@ -43,6 +43,7 @@ contract VotingLogic2 is VotingAdmin2, IVoting2 {
     */
     function delegate(address _delegateTo) external onlyWhitelisted {
         require(uint(workflowStatus) < uint(WorkflowStatus.VotingSessionEnded), "You can't delegate, vote is closed.");
+        require(_delegateTo != msg.sender, "You can't delegate to yourself.");
         Voter memory delegator = whitelist[_delegateTo];
         require(delegator.isRegistered, "The delegate is not registered in whitelist.");
         Voter memory currentVoter = whitelist[msg.sender];
@@ -125,6 +126,20 @@ contract VotingLogic2 is VotingAdmin2, IVoting2 {
     */
     function getProposalsCount() external view returns (uint256) {
         return proposals.length;
+    }
+
+    /**
+    @notice we can get the total votes count at any time
+     */
+    function getTotalVotesCount() external view returns (uint256) {
+        return totalVotesCount;
+    }
+
+    /**
+    @notice we can get the total voters count at any time
+    */
+    function getVotersCount() external view returns (uint256) {
+        return votersCount;
     }
 
     /**

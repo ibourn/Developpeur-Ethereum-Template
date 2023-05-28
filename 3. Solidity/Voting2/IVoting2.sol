@@ -15,5 +15,6 @@ interface IVoting2 {
     function getWinningProposalDetails() external view returns (string memory, uint);
     function getProposalsCount() external view returns (uint256);
     function getProposalDetails(uint _proposalId) external view returns (string memory, uint);
-
+    function getTotalVotesCount() external view returns (uint256);
+    function getVotersCount() external view returns (uint256);
 }
