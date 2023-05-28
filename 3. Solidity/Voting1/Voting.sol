@@ -5,7 +5,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 pragma solidity 0.8.20;
 
 /**
-@title 'Voters', a contract to register voters, proposals and vote for a proposal
+@title 'Voting', a contract to register voters, proposals and vote for a proposal
 @notice The owner is the admin, he can register voters, open and close the proposals registration, open and close the vote session, tally the votes
 Voters can register proposals and vote for a proposal and see the vote of the others. 
 The owner is the admin.
@@ -230,3 +230,6 @@ contract Voting is Ownable {
     }
 
 }
+
+
+// personal note : 2h30 (1h30 : doc, correction)
