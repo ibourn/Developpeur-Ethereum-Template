@@ -30,7 +30,7 @@ contract VotingFactory2 is Ownable {
   @notice function to create a new vote. One Vote == one clone contract with its storage context.
   @return the clone address, it allows with Ivoting2 or IVotingAdmin2 to participate to the vote
   */
-  function createVotingContract(string calldata _name) public returns(address) {
+  function createVotingContract(string calldata _name) public onlyOwner returns(address) {
     address votingClone = Clones.clone(votingMasterAddress);
 
     Voting2(votingClone).initialize(msg.sender, _name);  
