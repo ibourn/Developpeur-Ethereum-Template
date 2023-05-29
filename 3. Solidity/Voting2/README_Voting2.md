@@ -23,15 +23,15 @@ In short this version of Voting adds : optimization, delegation, clones & factor
 - [IVoting2](IVoting2.sol) for the voters (the admin can be a voter also)
 
 **SCENARIO**
-_After deployment :_
 
-- admin :
+- admin : _After deployment :_
+
   - uses _createVotingContract("vote name")_ to open a new vote
-    _via IVotingAdmin2 at the address of the clone :_
+  - _via IVotingAdmin2 at the address of the clone :_
   - registers voters
   - increments the workflow to start the proposals registration (only if there's at least one voter registered)
-    _via IVoting2 at the address of the clone :_
-- voters :
+
+- voters : _via IVoting2 at the address of the clone :_
 
   - registers proposals (one or many by voter)
   - can delegate their vote (delegator need to be registered), they can delegate till 'VoteSessionEnded'
@@ -73,7 +73,7 @@ _After deployment :_
   - IVotingAdmin2 : allows admin interactions at the address of a specific vote
 
 - As explained below :
-  - to manange the vote, now, the admin has only one function 'incrementWorkflowStep()'
+  - to manage the vote, now, the admin has only one function 'incrementWorkflowStep()'
     To move to the next step he need to use this function instead of startProposalRegistration().. tally()..
   - And the person who will deploy the contracts will be the owner of all the contracts created and therefore the admin. So as requested the deployer is the owner and the admin.
 
@@ -82,7 +82,7 @@ _After deployment :_
 We can add some features in a second version of the contract. Many functions could be added (getter ...) to have a better interactions and visualization but
 I focused on these propositions :
 
-1. **gas optimisation** (loop construction, unchecked tag). An idea would be to also pack the data and manage the function signatures and their order in the contract.
+1. **gas optimization** (loop construction, unchecked tag). An idea would be to also pack the data and manage the function signatures and their order in the contract.
 
 2. Adding the possibility to **delegate votes**. Thus a function delegate(address \_to) is added.
 
@@ -103,11 +103,11 @@ I focused on these propositions :
 
   - b. I chose to use clones instead in order to circumvent these disadvantages, for these reasons :
 
-  - We need additionnal code to handle clones however less than all the changes and new functions needed for the previous operation.
+  - We need additional code to handle clones however less than all the changes and new functions needed for the previous operation.
   - Then a basic contract will be deployed but the clones will act as a proxy with their storage context.
   - Not needing a new iteration level, the cost of loops and different computations will note increase with each vote
   - As we add more contracts, i try to decrease the deployment cost.
-  - In that direction I modify the flow management by using a new 'incrementWorkflowStep()' function replacing all admin functions used to move to the next workflow status. A disadvantage is that each incrementation cost a little more gas (as only the admin can do these actions, voters are not impacted).
+  - In that direction I modify the flow management by using a new 'incrementWorkflowStep()' function replacing all admin functions used to move to the next workflow status. A disadvantage is that each tx to increment the workflow cost a little more gas (as only the admin can do these actions, voters are not impacted).
 
 4. Possible improvement :
 
