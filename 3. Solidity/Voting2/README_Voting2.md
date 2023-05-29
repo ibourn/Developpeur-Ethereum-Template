@@ -22,39 +22,44 @@ In short this version of Voting adds : optimization, delegation, clones & factor
 - [IVotingAdmin2](./IVotingAdmin2.sol) for the admin
 - [IVoting2](IVoting2.sol) for the voters (the admin can be a voter also)
 
-As explained below :
-
-- to manange the vote the admin has only one function 'incrementWorkflowStep()'
-  To move to the next step he need to use this function instead of startProposalRegistration().. tally()..
-
-- And the person who will deploy the contracts will be the owner of all the contracts created and therefore the admin. So as requested the admin for all votes will be the owner
-
 **SCENARIO**
-_After deployment_
+_After deployment :_
 
 - admin :
-  -
-  - register voters
-  - increment the workflow to start de proposals registration
+  - uses _createVotingContract("vote name")_ to open a new vote
+    _via IVotingAdmin2 at the address of the clone :_
+  - registers voters
+  - increments the workflow to start the proposals registration (only if there's at least one voter registered)
+    _via IVoting2 at the address of the clone :_
 - voters :
-  - register proposals (one or many by voter)
+
+  - registers proposals (one or many by voter)
   - can delegate their vote (delegator need to be registered), they can delegate till 'VoteSessionEnded'
+
 - admin :
-  - increment the workflow to end the proposals registration
-  - increment the workflow to start the vote session
+
+  - increments the workflow to end the proposals registration (only if there's at least one proposal registered)
+  - increments the workflow to start the vote session
+
 - voters vote
+
 - admin :
-  - increment the workflow to end de vote session
-  - increment the workflow to tally the votes
+
+  - increments the workflow to end de vote session (only if there's at least one vote)
+  - increments the workflow to tally the votes
+
+- about votes :
+  - as there's at least one voter, one proposal, one vote leaving the default state of 'winningProposalId' does not create inconsistency.
+  - EQUALITY is not managed. Thus in this case, the winner will be the lowest proposalID and so the first proposal registered
 
 ## **II. STRUCTURE :**
 
-- VotingFactory2
+- VotingFactory2 :
 
   - this contract stores the address of the master vote contract (Voting2) and create Voting clones
   - Thus 1 vote structure is 1 clone contract with its storage context
 
-- Voting Contract:
+- Voting Contract :
 
   - heritage : VotingStorage2 > VotingAdmin2 > VotingLogic2 > Voting2
   - main contract : Voting2
@@ -62,9 +67,15 @@ _After deployment_
   - VotingLogic2 : group all actions related to voters
   - Voting2 : inherits logic and storage. Allows ownership management of the clones
 
-- interfaces :
-  - IVoting2 : allows voters interactions at the address of a specific vote
+- Interfaces :
+
+  - IVoting2 : allows voters interactions at the address of a specific vote (a Voting clone)
   - IVotingAdmin2 : allows admin interactions at the address of a specific vote
+
+- As explained below :
+  - to manange the vote, now, the admin has only one function 'incrementWorkflowStep()'
+    To move to the next step he need to use this function instead of startProposalRegistration().. tally()..
+  - And the person who will deploy the contracts will be the owner of all the contracts created and therefore the admin. So as requested the deployer is the owner and the admin.
 
 ## **III. CHOICES AND EXPLANATION :**
 
@@ -85,17 +96,23 @@ I focused on these propositions :
 
 - A second option would be to modify the structure to accept many votes. It's my choice.
 
-- a. A solution could be to use arrays and mappings to manage data the same way as with the current contract for each different vote.
+  - a. A solution could be to use arrays and mappings to manage data the same way as with the current contract for each different vote.
 
-- It means adding functions to manage this 'higher order' of management.
-- This also means adding code and loops for this. The number of proposals, voters... are not limited, so I don’t like this solution because the more the app will be used the longer the loops will be involving an increasing cost of execution as well as an uncontrollable size of the 'storage' of the basic contract.
+  - It means adding functions to manage this 'higher order' of management.
+  - This also means adding code and loops for this. The number of proposals, voters... are not limited, so I don’t like this solution because the more the app will be used the longer the loops will be involving an increasing cost of execution as well as an uncontrollable size of the 'storage' of the basic contract.
 
-- b. I chose to use clones instead in order to circumvent these disadvantages, for these reasons :
+  - b. I chose to use clones instead in order to circumvent these disadvantages, for these reasons :
 
-- We need additionnal code to handle clones however less than all the changes and new functions needed for the previous operation.
-- Then a basic contract will be deployed but the clones will act as a proxy with their storage context.
-- Not needing a new iteration level, the cost of loops and different computations will note increase with each vote
-- As we add more contracts, i try to decrease the deployment cost.
-- In that direction I modify the flow management by using a new 'incrementWorkflowStep()' function replacing all admin functions used to move to the next workflow status. A disadvantage is that each incrementation cost a little more gas (as only the admin can do these actions, voters are not impacted).
+  - We need additionnal code to handle clones however less than all the changes and new functions needed for the previous operation.
+  - Then a basic contract will be deployed but the clones will act as a proxy with their storage context.
+  - Not needing a new iteration level, the cost of loops and different computations will note increase with each vote
+  - As we add more contracts, i try to decrease the deployment cost.
+  - In that direction I modify the flow management by using a new 'incrementWorkflowStep()' function replacing all admin functions used to move to the next workflow status. A disadvantage is that each incrementation cost a little more gas (as only the admin can do these actions, voters are not impacted).
+
+4. Possible improvement :
+
+- use a proxy for the factory to allow updates and adding features (there's only the minimum to run)
+- features to add to the factory : manage the version of the Voting contract
+- features to add to the voting contract : management of the vote count... add the possibility to set more rules...check the proposals to avoid having several identical
 
 // personal note : 3 \* 1/2 journée (1 doc/tests, 1 implementation : clone / heritage.. and correction/tests)
