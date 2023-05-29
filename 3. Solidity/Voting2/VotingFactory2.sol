@@ -41,13 +41,13 @@ contract VotingFactory2 is Ownable {
   }
 
   /**
-  @notice getter to get addresses of each vote created
-  @return an array of clone addresses
+  @notice getter to get the address of master voting contract
+  @return address of current master voting contract
   */
   function getMasterVotingAddress() external view returns(address) {
       return votingMasterAddress;
   }
-  
+
   /**
   @notice getter to get addresses of each vote created
   @return an array of clone addresses
