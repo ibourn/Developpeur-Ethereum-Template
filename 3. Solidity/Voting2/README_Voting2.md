@@ -29,7 +29,7 @@ In short this version of Voting adds : optimization, delegation, clones & factor
   - uses _createVotingContract("vote name")_ to open a new vote
   - _via IVotingAdmin2 at the address of the clone :_
   - registers voters
-  - increments the workflow to start the proposals registration (only if there's at least one voter registered)
+  - increments the workflow to start the proposals registration (**only if there's at least one voter registered**)
 
 - voters : _via IVoting2 at the address of the clone :_
 
@@ -38,14 +38,14 @@ In short this version of Voting adds : optimization, delegation, clones & factor
 
 - admin :
 
-  - increments the workflow to end the proposals registration (only if there's at least one proposal registered)
+  - increments the workflow to end the proposals registration (**only if there's at least one proposal registered**)
   - increments the workflow to start the vote session
 
 - voters vote
 
 - admin :
 
-  - increments the workflow to end de vote session (only if there's at least one vote)
+  - increments the workflow to end de vote session (**only if there's at least one vote**)
   - increments the workflow to tally the votes
 
 - about votes :
