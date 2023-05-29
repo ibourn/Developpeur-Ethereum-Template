@@ -22,7 +22,7 @@ contract VotingFactory2 is Ownable {
   /**
   @notice allows to set the master voting addres from which votes will be cloned
   */
-  function setVotingMasterAddress(address _votingMasterAddress) public onlyOwner {
+  function setVotingMasterAddress(address _votingMasterAddress) external onlyOwner {
     votingMasterAddress = _votingMasterAddress;
   }
 
@@ -30,7 +30,7 @@ contract VotingFactory2 is Ownable {
   @notice function to create a new vote. One Vote == one clone contract with its storage context.
   @return the clone address, it allows with Ivoting2 or IVotingAdmin2 to participate to the vote
   */
-  function createVotingContract(string calldata _name) public onlyOwner returns(address) {
+  function createVotingContract(string calldata _name) external onlyOwner returns(address) {
     address votingClone = Clones.clone(votingMasterAddress);
 
     Voting2(votingClone).initialize(msg.sender, _name);  
@@ -44,7 +44,7 @@ contract VotingFactory2 is Ownable {
   @notice getter to get addresses of each vote created
   @return an array of clone addresses
   */
-  function getVotingClonesAddresses() public view returns(address[] memory) {
+  function getVotingClonesAddresses() external view returns(address[] memory) {
       return votingCloneAddresses;
   }
 }

@@ -26,6 +26,7 @@ In short this version of Voting adds : optimization, delegation, clones & factor
 
 - admin : _After deployment :_
 
+  - set the address of the deployed Voting contract with _setVotingMasterAddress_
   - uses _createVotingContract("vote name")_ to open a new vote
   - _via IVotingAdmin2 at the address of the clone :_
   - registers voters
