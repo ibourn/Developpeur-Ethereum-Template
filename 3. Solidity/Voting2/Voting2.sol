@@ -13,6 +13,7 @@ contract Voting2 is VotingLogic2 {
 
     ///@dev states used to manage master and clones ownership. FirstOwner must be the factory as it creates clones
     address private immutable firstOwner;
+    ///@dev it's important that value is false (even if false is the default value, i set it for clear code reading)
     bool private initizalized = false;
 
     /**

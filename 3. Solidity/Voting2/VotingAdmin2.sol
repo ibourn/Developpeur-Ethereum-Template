@@ -28,13 +28,6 @@ contract VotingAdmin2 is VotingStorage2, IVotingAdmin2 {
     }
 
     /**
-    @notice getter for the current 'workflowstatus', it's public to let voter check the status
-    */
-    function getWorkflowStatus() public view returns(uint) {
-        return uint(workflowStatus);
-    }
-
-    /**
     @notice this function becomes the only one the admin use to manage the workflow.
      - Admin needs to call this function as soon as he wants to proceed to the next step of the workflow.
      - Thus tallyVotes() is called by the function when he wants to switch from 'VotingSessionEnded'
@@ -85,6 +78,28 @@ contract VotingAdmin2 is VotingStorage2, IVotingAdmin2 {
     } 
 
     /**
+    @notice allow to register a voter one by one. 
+    @param _voterAddress the address of the voter to register
+    */
+    function registerVoter(address _voterAddress) public onlyOwner onlyDuringVotersRegistration {
+        Voter memory currentVoter = whitelist[_voterAddress];
+        require(!currentVoter.isRegistered, "This address is already registered.");
+        
+        ++votersCount;
+        currentVoter.isRegistered = true;
+        whitelist[_voterAddress] = currentVoter;
+
+        emit VoterRegistered(_voterAddress);
+    }
+
+    /**
+    @notice getter for the current 'workflowstatus', it's public to let voter check the status
+    */
+    function getWorkflowStatus() public view returns(uint) {
+        return uint(workflowStatus);
+    }
+
+    /**
     @notice the owner can tally the votes only when the workflow status is VotingSessionEnded
      the winning proposal is the one with the most votes. In case of equality, the first registered proposal wins
      the winning proposal id is stored in `winningProposalId` 
@@ -105,20 +120,4 @@ contract VotingAdmin2 is VotingStorage2, IVotingAdmin2 {
         workflowStatus = WorkflowStatus.VotesTallied; 
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionEnded, WorkflowStatus.VotesTallied);
     }
-
-    /**
-    @notice allow to register a voter one by one. 
-    @param _voterAddress the address of the voter to register
-    */
-    function registerVoter(address _voterAddress) public onlyOwner onlyDuringVotersRegistration {
-        Voter memory currentVoter = whitelist[_voterAddress];
-        require(!currentVoter.isRegistered, "This address is already registered.");
-        
-        ++votersCount;
-        currentVoter.isRegistered = true;
-        whitelist[_voterAddress] = currentVoter;
-
-        emit VoterRegistered(_voterAddress);
-    }
-
 }

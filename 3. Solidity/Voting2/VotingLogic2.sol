@@ -17,7 +17,7 @@ contract VotingLogic2 is VotingAdmin2, IVoting2 {
 
     event ProposalRegistered(uint ProposalId);
     event Voted(address voter, uint proposalId);
-    /* added to warn when someone delegates (because in logic if he delegates he doesn't vote)*/
+    /* added to warn when someone delegates (because in principle if he delegates he doesn't vote)*/
     event Delegated(address voter, address delegateTo);
  
     modifier onlyDuringProposalsRegistration() {
@@ -86,10 +86,10 @@ contract VotingLogic2 is VotingAdmin2, IVoting2 {
     @param _proposalId the id of the proposal to vote for
     */
     function vote(uint _proposalId) external onlyWhitelisted onlyDuringVotingSession {
+        require(_proposalId < proposals.length, "Proposal does not exist.");
         Voter memory currentVoter = whitelist[msg.sender];
         require(!currentVoter.hasVoted, "You have already voted.");
         require(currentVoter.delegateTo == address(0), "You have delegated your vote.");
-        require(_proposalId < proposals.length, "Proposal does not exist.");
 
         ++totalVotesCount;
         currentVoter.hasVoted = true;
@@ -149,7 +149,7 @@ contract VotingLogic2 is VotingAdmin2, IVoting2 {
     */
     function getProposalDetails(uint _proposalId) public view onlyWhitelisted returns (string memory, uint) {
         Proposal[] memory currentProposals = proposals;
-        require(currentProposals.length != 0, "No proposal registered yet.");
+        /* manage also the case where there's no proposal cause Id 0 will not be < length 0*/
         require(_proposalId < currentProposals.length, "Proposal does not exist.");
 
         return (currentProposals[_proposalId].description, currentProposals[_proposalId].voteCount);
