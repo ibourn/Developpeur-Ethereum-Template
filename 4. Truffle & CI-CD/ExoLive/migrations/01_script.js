@@ -3,6 +3,7 @@ const Storage = artifacts.require("Storage");
 
 module.exports = async function (deployer, network, accounts) {
   const valToSend = web3.utils.toWei("1", "ether");
+  const valToSendGoerli = web3.utils.toWei("0.001", "ether");
   const account1 = accounts[0];
 
   if (network === "development") {
@@ -10,6 +11,12 @@ module.exports = async function (deployer, network, accounts) {
       //   overwrite: false,
       from: `${account1}`,
       value: `${valToSend}`,
+    });
+  } else if (network === "goerli") {
+    await deployer.deploy(Storage, 5, {
+      //   overwrite: false,
+      from: `${account1}`,
+      value: `${valToSendGoerli}`,
     });
   }
 };
