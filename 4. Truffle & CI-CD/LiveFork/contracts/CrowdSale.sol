@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 import "./ERC20Token.sol";
-contract Crowdsale {  
+contract CrowdSale {  
   uint public rate = 200; // le taux à utiliser
   ERC20Token public token;
   constructor(uint256 initialSupply) {

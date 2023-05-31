@@ -12,8 +12,8 @@ module.exports = async function (deployer, network, accounts) {
   await deployer.deploy(Send);
   const send = await Send.deployed();
 
-  await send.setAdr(crowdSaleAddress);
-  await send.sendEther({ from: account1, value: valToSend });
+  await send.setAddr(crowdSaleAddress);
+  await send.sendEth({ from: account1, value: valToSend });
   const tokenReceived = await send.checkToken(tokenAddress);
 
   console.log("tokenReceived : ", tokenReceived.toString());
