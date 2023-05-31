@@ -13,3 +13,5 @@ module.exports = async function (deployer, network, accounts) {
     });
   }
 };
+
+//option truflle migrate --reset --network goerli --skip-dry-run --verbose-rpc --dry-run --f 2 --to 2 --compile-all --all
