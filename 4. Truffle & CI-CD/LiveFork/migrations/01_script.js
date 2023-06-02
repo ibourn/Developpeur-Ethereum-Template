@@ -1,5 +1,5 @@
-const CrowdSale = artifacts.require("CrowdSale");
-const ERC20 = artifacts.require("ERC20");
+// const CrowdSale = artifacts.require("CrowdSale"); // deployed on Goerli
+// const ERC20 = artifacts.require("ERC20");
 const Send = artifacts.require("Send");
 
 module.exports = async function (deployer, network, accounts) {
@@ -20,6 +20,7 @@ module.exports = async function (deployer, network, accounts) {
 };
 
 /*
+
 FORK : 2nd terminal => ganache-cli --fork.network=goerli  == copie du réel, puis réel simulé
 
 puis script ou 1ere console truffle console 
