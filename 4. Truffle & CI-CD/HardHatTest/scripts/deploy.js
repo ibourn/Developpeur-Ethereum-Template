@@ -51,7 +51,7 @@ main().catch((error) => {
 commande npm :
 npx hardhat compile
 2nd terminal (MEME DOSSIER!) : npx hardhat node
-npx hardhat run .\scripts\deploy.js --network localhost
+npx hardhat run ./scripts/deploy.js --network localhost
 
 npx hardhat run ./scripts/deploy.js --network sepolia
 */
