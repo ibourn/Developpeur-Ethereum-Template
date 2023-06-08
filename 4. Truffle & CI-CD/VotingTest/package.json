@@ -3,6 +3,10 @@
     "@openzeppelin/contracts": "^4.9.0",
     "@openzeppelin/test-helpers": "^0.5.16",
     "@truffle/hdwallet-provider": "^2.1.11",
-    "dotenv": "^16.1.4"
+    "dotenv": "^16.1.4",
+    "eth-gas-reporter": "^0.2.25"
+  },
+  "devDependencies": {
+    "solidity-coverage": "^0.8.2"
   }
 }

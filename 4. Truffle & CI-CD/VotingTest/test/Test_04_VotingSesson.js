@@ -1,28 +1,15 @@
 const { assert, expect } = require("chai");
 const { BN, expectRevert, expectEvent } = require("@openzeppelin/test-helpers");
-const constants = require("@openzeppelin/test-helpers/src/constants");
-const { contracts_build_directory } = require("../truffle-config");
-// const { it, describe } = require("node:test");
-const Voting = artifacts.require("Voting");
+
 const {
-  ownerId,
-  voterId1,
-  voterId2,
-  voterId3,
-  strangerId,
   workflow,
-} = require("../testHelpers/TestConfig.js");
-const { getValidStatusIndex } = require("../testHelpers/TestHelpers.js");
+  getMockVoters,
+  mockStartProposal,
+  mockEndProposal,
+} = require("./Test_VotingHelpers.js");
 
-let winnigProposalID;
-let workflowStatus;
-
-contract("Voting", (accounts) => {
-  const owner = accounts[ownerId];
-  const voter1 = accounts[voterId1];
-  const voter2 = accounts[voterId2];
-  const voter3 = accounts[voterId3];
-  const stranger = accounts[strangerId];
+contract("Voting / Test_04", (accounts) => {
+  const { owner, voter1, voter2, voter3, stranger } = getMockVoters(accounts);
 
   const preStatus = workflow[2]; //ProposalsRegistrationEnded
   const preStatusId = 2;
@@ -31,40 +18,19 @@ contract("Voting", (accounts) => {
   const nextStatus = workflow[4];
   const nextStatusId = 4;
 
+  const nonExistingProposalId = 10;
   let votingInstance;
-  // describe("curent status", () => {
-  // before(async () => {
-  //   votingInstance = await Voting.new({ from: owner });
-  //   await votingInstance.addVoter(voter1, { from: owner });
-  //   await votingInstance.addVoter(voter2, { from: owner });
-  //   await votingInstance.addVoter(voter3, { from: owner });
-  //   await votingInstance.startProposalsRegistering({
-  //     from: owner,
-  //   });
-  // });
 
   describe(`${curStatus} status step`, () => {
-    nonExistingProposalId = 10;
     beforeEach(async () => {
-      votingInstance = await Voting.new({ from: owner });
-      await votingInstance.addVoter(voter1, { from: owner });
-      await votingInstance.addVoter(voter2, { from: owner });
-      await votingInstance.addVoter(voter3, { from: owner });
-      await votingInstance.startProposalsRegistering({
-        from: owner,
-      });
-      await votingInstance.addProposal("first propsoal", {
-        from: voter1,
-      });
-      await votingInstance.addProposal("second proposal", {
-        from: voter2,
-      });
-      await votingInstance.addProposal("third proposal", {
-        from: voter3,
-      });
-      await votingInstance.endProposalsRegistering({
-        from: owner,
-      });
+      votingInstance = await mockStartProposal(owner, voter1, voter2, voter3);
+      votingInstance = await mockEndProposal(
+        votingInstance,
+        owner,
+        voter1,
+        voter2,
+        voter3
+      );
     });
     describe(`checks that the ${curStatus} status is valid`, () => {
       it(`checks status is ${preStatus}`, async function () {
@@ -172,42 +138,6 @@ contract("Voting", (accounts) => {
         });
       });
     });
-    //   describe("adding a proposal", () => {
-    //     it("should revert for empty proposal", async function () {
-    //       await expectRevert(
-    //         votingInstance.addProposal("", { from: voter1 }),
-    //         "Vous ne pouvez pas ne rien proposer"
-    //       );
-    //     });
-    //     describe("adding proposals", () => {
-    //       const testProposals = [
-    //         //id:0 is the 'genesis' proposal
-    //         { id: 1, content: "first proposal", sender: voter1 },
-    //         { id: 2, content: "second proposal", sender: voter2 },
-    //         { id: 3, content: "third proposal", sender: voter3 },
-    //       ];
-    //       testProposals.forEach(function (t) {
-    //         it(`should emit 'ProposalRegistered' event for proposalId${t.id}`, async function () {
-    //           const receipt = await votingInstance.addProposal(t.content, {
-    //             from: t.sender,
-    //           });
-    //           expectEvent(receipt, "ProposalRegistered", {
-    //             proposalId: new BN(t.id),
-    //           });
-    //         });
-
-    //         it(`it should get '${t.content}' for ID ${t.id}`, async function () {
-    //           const receipt = await votingInstance.getOneProposal(t.id, {
-    //             from: voter1,
-    //           });
-    //           const proposal = receipt[0];
-    //           //console.log(proposal);
-    //           //get the value of description
-    //           expect(proposal).to.equal(t.content);
-    //         });
-    //       });
-    //     });
-    //   });
     describe("voter can't had proposal", () => {
       beforeEach(async () => {
         await votingInstance.startVotingSession({

@@ -10,6 +10,8 @@ module.exports = {
     },
   },
   mocha: {
+    reporter: "eth-gas-reporter",
+    showTimeSpent: true,
     // timeout: 100000
   },
   compilers: {
@@ -17,4 +19,5 @@ module.exports = {
       version: "0.8.20", // Fetch exact version from solc-bin (default: truffle's version)
     },
   },
+  plugins: ["solidity-coverage"],
 };

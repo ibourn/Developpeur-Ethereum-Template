@@ -1,8 +1,6 @@
 const { assert, expect } = require("chai");
-const { BN, expectRevert, expectEvent } = require("@openzeppelin/test-helpers");
-const constants = require("@openzeppelin/test-helpers/src/constants");
-const { contracts_build_directory } = require("../truffle-config");
-// const { it, describe } = require("node:test");
+const { expectRevert } = require("@openzeppelin/test-helpers");
+
 const Voting = artifacts.require("Voting");
 const {
   ownerId,
@@ -11,11 +9,8 @@ const {
   voterId3,
   strangerId,
   workflow,
-} = require("../testHelpers/TestConfig.js");
-const { getValidStatusIndex } = require("../testHelpers/TestHelpers.js");
-
-let winnigProposalID;
-let workflowStatus;
+  getMockVoters,
+} = require("./Test_VotingHelpers.js");
 
 describe("Validation of test file data", async () => {
   describe("the 'workflow' array corresponds to the 'workflowStatus' enum", function () {
@@ -59,26 +54,16 @@ describe("Validation of test file data", async () => {
   });
 });
 
-contract("Voting", (accounts) => {
-  const owner = accounts[ownerId];
-  const voter1 = accounts[voterId1];
-  const voter2 = accounts[voterId2];
-  const voter3 = accounts[voterId3];
-  const stranger = accounts[strangerId];
-
+contract("Voting / Test_01", (accounts) => {
+  const { owner, voter1, stranger } = getMockVoters(accounts);
   let votingInstance;
 
   beforeEach(async () => {
     votingInstance = await Voting.new({ from: owner });
-    // console.log("hook hors describe");
   });
 
   describe("After Deployment", async () => {
     it("checks workflowStatus is RegisteringVoters", async () => {
-      let statusIndex = getValidStatusIndex({
-        statusName: "RegisteringVoters",
-        expectedStatusIndex: 0,
-      });
       assert.equal(await votingInstance.workflowStatus(), 0);
     });
 
@@ -90,6 +75,7 @@ contract("Voting", (accounts) => {
       assert.equal(await votingInstance.winningProposalID(), 0);
     });
   });
+
   describe("functions access", async () => {
     describe("Non owner can't perfom admin actions", async () => {
       it("non owner can't addVoter", async () => {
@@ -98,18 +84,21 @@ contract("Voting", (accounts) => {
           "Ownable: caller is not the owner"
         );
       });
+
       it("non owner can't startProposalsRegistration", async () => {
         await expectRevert(
           votingInstance.startProposalsRegistering({ from: stranger }),
           "Ownable: caller is not the owner"
         );
       });
+
       it("non owner can't endProposalsRegistration", async () => {
         await expectRevert(
           votingInstance.endProposalsRegistering({ from: stranger }),
           "Ownable: caller is not the owner"
         );
       });
+
       it("non owner can't startVotingSession", async () => {
         await expectRevert(
           votingInstance.startVotingSession({ from: stranger }),
@@ -123,6 +112,7 @@ contract("Voting", (accounts) => {
           "Ownable: caller is not the owner"
         );
       });
+
       it("non owner can't tallyVotes", async () => {
         await expectRevert(
           votingInstance.tallyVotes({ from: stranger }),
@@ -132,26 +122,27 @@ contract("Voting", (accounts) => {
     });
 
     describe("Non Voter can't perform voter actions", async () => {
-      // :::::::::::::::: onlyOwner :::::::::::::::://
       it("non voter can't get voter", async () => {
         await expectRevert(
-          votingInstance.getVoter(owner),
+          votingInstance.getVoter(owner, { from: stranger }),
           "You're not a voter"
         );
       });
 
       it("non voter can't get proposal", async () => {
         await expectRevert(
-          votingInstance.getOneProposal(0),
+          votingInstance.getOneProposal(0, { from: stranger }),
           "You're not a voter"
         );
       });
+
       it("non voter can't addProposal", async () => {
         await expectRevert(
           votingInstance.addProposal("new proposal", { from: stranger }),
           "You're not a voter"
         );
       });
+
       it("non voter can't vote", async () => {
         await expectRevert(
           votingInstance.setVote(0, { from: stranger }),
