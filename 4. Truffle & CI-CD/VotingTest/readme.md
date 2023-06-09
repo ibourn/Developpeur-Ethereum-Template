@@ -2,9 +2,8 @@
 
 ## environment :
 
-truffle <br>
-installation : npm install --prefix . @openzeppelin/test-helpers --save-dev
-@openzeppelin/contracts dotenv @truffle/hdwallet-provider
+development and test : truffle <br>
+I used hardhat with hardhat-truffle5 to get the coverage of the test using the same truffle code provided here
 
 ## coverage :
 
