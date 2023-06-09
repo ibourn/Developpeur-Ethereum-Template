@@ -10,7 +10,7 @@ installation : npm install --prefix . @openzeppelin/test-helpers --save-dev
 
 it tried to cover all cases for all functions, however I did not test the situations not dealt with by the contract (ex: equality of votes...)
 
-the same with hardhat tells me :
+the use of package x allowing to use truffle code in hardhat allowed to test hardhat coverage with a result of 100% for all columns
 
 ## structure :
 
@@ -40,10 +40,10 @@ here are the mocked elements:
 
 - before any test, I confirm that the simulated status matches the indexes of the enum
 - it is also checked that owner and stranger are unique
-
+- we check the contract is deployed
 - we then check the value of the states expected for deployment (status, winningId, and the owner)
 
-- finally, since access to functions is processed with modifiers, I check that access to all functions with limited access is not accessible by unauthorized addresses. This frees up the rest of the tests
+- finally, since access to functions is processed with modifiers, I check that all functions with limited access is not accessible by unauthorized addresses. This frees up the rest of the tests
 
 ### 02 'RegisterVoter' :
 
@@ -51,7 +51,7 @@ here are the mocked elements:
 
 - I then check the actions related to this phase:
 - addVoter, getVoter : when adding a voter: an event must be issued, it must be added to the voter mapping. An attempt to add the same voter must revert
-- comme addVoter est testé, on peut tester, le statut initial de getOneProposal qui doit revert. Cela confirme que proposals est vide
+- as addVoter is tested, we can test, the initial status of getOneProposal which must revert. This confirms that proposals is empty
 
 - then check that voting and owner cannot call all other functions accessible only during other status
 

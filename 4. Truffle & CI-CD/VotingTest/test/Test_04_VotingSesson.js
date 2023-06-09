@@ -11,12 +11,12 @@ const {
 contract("Voting / Test_04", (accounts) => {
   const { owner, voter1, voter2, voter3, stranger } = getMockVoters(accounts);
 
-  const preStatus = workflow[2]; //ProposalsRegistrationEnded
   const preStatusId = 2;
-  const curStatus = workflow[3];
   const curStatusId = 3;
-  const nextStatus = workflow[4];
   const nextStatusId = 4;
+  const preStatus = workflow[preStatusId]; //ProposalsRegistrationEnded
+  const curStatus = workflow[curStatusId];
+  const nextStatus = workflow[nextStatusId];
 
   const nonExistingProposalId = 10;
   let votingInstance;

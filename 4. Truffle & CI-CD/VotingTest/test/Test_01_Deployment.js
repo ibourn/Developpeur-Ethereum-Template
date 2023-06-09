@@ -53,6 +53,12 @@ describe("Validation of test file data", async () => {
     });
   });
 });
+contract("Voting / Test_01", (accounts) => {
+  it("checks Voting is correctly deployed", async () => {
+    const votingInstance = await Voting.new({ from: accounts[0] });
+    assert(votingInstance, "contract is not deployed");
+  });
+});
 
 contract("Voting / Test_01", (accounts) => {
   const { owner, voter1, stranger } = getMockVoters(accounts);
