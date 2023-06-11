@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - "homework"
-
+    paths:
+      - '4. Truffle & CI-CD/VotingTestHHat/**' 
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
