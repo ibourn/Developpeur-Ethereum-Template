@@ -26,12 +26,13 @@ jobs:
       #       echo "action_path: ${{ github.action_path }}"
       #       echo "event_path: ${{ github.event_path }}"
       - name: install node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-      - uses: actions/cache@v2
+          cache: "npm"
+      - uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: ./node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
