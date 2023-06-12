@@ -37,7 +37,7 @@ jobs:
       #       restore-keys: |
       #         ${{ runner.os }}-node-
       - name: install dependencies
-        run: npm ci
+        run: npm install
       - name: harhat compile
         run: npx hardhat compile
       - name: run tests
