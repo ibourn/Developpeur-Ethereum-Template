@@ -1,0 +1,41 @@
+name: GA - VotingTest Test on push to homework branch
+run-name: ${{ github.actor }} is testing out GitHub Actions from root-homework🚀
+on:
+  push:
+    branches:
+      - "homework"
+    paths:
+      - "4. Truffle & CI-CD/VotingTestHHat/**"
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.16.0"
+          cache: "npm"
+          cache-dependency-path: ./4. Truffle & CI-CD/VotingTestHHat/package-lock.json
+      - uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+          path: .4. Truffle & CI-CD/VotingTestHHat/node_modules
+          restore-keys: |
+            ${{ runner.os }}-modules-
+      - name: install dependencies
+        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npm install -g hardhat && npm install
+      - name: harhat compile
+        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npx hardhat compile
+      - name: run tests
+        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npx hardhat test
+
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
