@@ -23,7 +23,7 @@ jobs:
         #   cache: "npm"
       - uses: actions/cache@v3
         with:
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
           path: ./node_modules
       #       restore-keys: |
       #         ${{ runner.os }}-node-
