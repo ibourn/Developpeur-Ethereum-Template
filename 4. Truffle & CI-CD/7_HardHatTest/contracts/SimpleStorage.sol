@@ -6,9 +6,9 @@ contract SimpleStorage {
 
     uint private number;
 
-    constructor(uint _number) {
-        number = _number;
-    }
+    // constructor(uint _number) {
+    //     number = _number;
+    // }
 
     function setNumber(uint _number) external {
         number = _number;

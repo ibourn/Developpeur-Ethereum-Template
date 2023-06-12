@@ -35,7 +35,7 @@ const hre = require("hardhat");
 
 async function main() {
   const SimpleStorage = await hre.ethers.getContractFactory("SimpleStorage");
-  const simpleStorage = await SimpleStorage.deploy(777);
+  const simpleStorage = await SimpleStorage.deploy(777); //SimpleStorage.deploy(777);
 
   await simpleStorage.deployed();
 
