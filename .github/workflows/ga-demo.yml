@@ -31,7 +31,7 @@ jobs:
       - name: install dependencies
         run: cd "4. Truffle & CI-CD"/VotingTestHHat && npm install -g hardhat && npm install
       - name: harhat compile
-        run: npx hardhat compile
+        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npx hardhat compile
       - name: run tests
         run: npx hardhat test
 
