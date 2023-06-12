@@ -1,4 +1,5 @@
-name: GA - VotingTest Test on push to homework branch
+name: Trufle CI-CD folder push to homework branch
+# This workflow is triggered on pushes to the homework branch in the 4. Truffle & CI-CD folder
 run-name: ${{ github.actor }} is testing out GitHub Actions from root-homework🚀
 on:
   push:
