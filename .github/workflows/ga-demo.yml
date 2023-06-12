@@ -29,7 +29,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-modules-
       - name: install dependencies
-        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npm install && npm install hardhat
+        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npm install --save-dev hardhat && npm install
       - name: harhat compile
         run: npx hardhat compile
       - name: run tests
