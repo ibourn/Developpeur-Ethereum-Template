@@ -25,9 +25,9 @@ jobs:
       - uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-          path: ./node_modules
-      #       restore-keys: |
-      #         ${{ runner.os }}-node-
+          path: .4. Truffle & CI-CD/VotingTestHHat/node_modules
+          restore-keys: |
+            ${{ runner.os }}-modules-
       - name: install dependencies
         run: npm install
       - name: harhat compile
