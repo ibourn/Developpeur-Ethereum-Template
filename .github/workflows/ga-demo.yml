@@ -29,7 +29,7 @@ jobs:
       #       restore-keys: |
       #         ${{ runner.os }}-node-
       - name: install dependencies
-        run: npm install --frozen-lockfile
+        run: npm install
       - name: harhat compile
         run: npx hardhat compile
       - name: run tests
