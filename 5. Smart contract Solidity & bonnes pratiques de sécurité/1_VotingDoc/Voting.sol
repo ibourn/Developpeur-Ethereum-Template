@@ -94,7 +94,7 @@ contract Voting is Ownable {
  
     // ::::::::::::: REGISTRATION ::::::::::::: // 
 
-    /// @notice Add voter, only owner, emit VoterRegistered.
+    /// @notice Add a voter in 'voters', only owner, emit VoterRegistered.
     ///sould be called only once for each voter and when workflowStatus is RegisteringVoters
     /// @param _addr Voter address
     function addVoter(address _addr) external onlyOwner {
@@ -107,7 +107,7 @@ contract Voting is Ownable {
  
 
     // ::::::::::::: PROPOSAL ::::::::::::: // 
-    /// @notice Add proposal, only voters, emit ProposalRegistered.
+    /// @notice Add proposal of 'msg.sender' in 'proposals', only voters, emit ProposalRegistered.
     /// should be called only when workflowStatus is ProposalsRegistrationStarted
     /// no empty description allowed
     /// @param _desc Proposal description
@@ -123,7 +123,7 @@ contract Voting is Ownable {
     }
 
     // ::::::::::::: VOTE ::::::::::::: //
-    /// @notice Set vote, only voters, emit Voted.
+    /// @notice Set the vote of 'msg.sender', only voters, emit Voted.
     /// should be called only when workflowStatus is VotingSessionStarted
     /// should be called only once for each voter and for a registered proposal
     /// @param _id Proposal id
