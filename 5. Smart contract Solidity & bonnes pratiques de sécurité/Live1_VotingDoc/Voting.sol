@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.20;
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title A voting contract
 /// @author ibourn
 /// @notice You can use this contract for only one vote 
 /// @inheritdoc Ownable
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+
+
 contract Voting is Ownable {
 
     /// @notice Winning proposal id
