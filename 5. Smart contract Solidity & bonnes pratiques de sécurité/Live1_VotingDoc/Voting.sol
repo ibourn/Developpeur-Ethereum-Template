@@ -1,5 +1,13 @@
 // SPDX-License-Identifier: MIT
 
+/*pour projet hardhat  => generer la doc auto des natspec
+
+yarn add hardhat-docgen
+
+=>ds hh config : require('hardaht-docgen');
+puis : "docgen: {path: './docs',clear: true, runOnCompile:true,}"
+=> yarn hardhat run
+*/
 pragma solidity 0.8.20;
 
 /// @title A voting contract
