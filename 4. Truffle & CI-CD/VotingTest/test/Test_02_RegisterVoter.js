@@ -5,7 +5,7 @@ const Voting = artifacts.require("Voting");
 const { getMockVoters, workflow } = require("./Test_VotingHelpers.js");
 
 contract("Voting / Test_02", (accounts) => {
-  const { owner, voter1 } = getMockVoters(accounts);
+  const { owner, voter1, voter2 } = getMockVoters(accounts);
 
   const curStatusId = 0;
   const nextStatusId = 1;
@@ -24,6 +24,19 @@ contract("Voting / Test_02", (accounts) => {
     it(`checks current status is ${curStatus}`, async function () {
       const status = await votingInstance.workflowStatus.call({ from: owner });
       expect(status.toNumber()).to.equal(curStatusId);
+    });
+
+    it("should revert to get Voter1 when Voter1 not registered", async function () {
+      await expectRevert(
+        votingInstance.getVoter(voter1, { from: voter1 }),
+        "You're not a voter"
+      );
+    });
+
+    it("checks voter2 is not registered", async function () {
+      await votingInstance.addVoter(voter1, { from: owner });
+      const voter = await votingInstance.getVoter(voter2, { from: voter1 });
+      expect(voter.isRegistered).to.equal(false);
     });
 
     describe("adding a voter", () => {

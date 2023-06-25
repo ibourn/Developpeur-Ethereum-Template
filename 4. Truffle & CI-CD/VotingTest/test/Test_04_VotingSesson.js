@@ -61,21 +61,27 @@ contract("Voting / Test_04", (accounts) => {
       const testProposals = [0, 1, 2, 3];
       testProposals.forEach(function (t) {
         it(`checks that the ${t} proposal has no vote`, async function () {
-          const receipt = await votingInstance.getOneProposal(t, {
+          const proposal = await votingInstance.getOneProposal(t, {
             from: voter1,
           });
-          const voteCount = receipt[1];
-          expect(voteCount).to.not.equal(0);
+          expect(proposal.voteCount).to.be.bignumber.equal(new BN(0));
         });
       });
       const testVoters = [voter1, voter2, voter3];
       testVoters.forEach(function (t) {
         it(`checks that the ${t} voter has no voted proposal`, async function () {
-          const receipt = await votingInstance.getVoter(t, {
+          const voter = await votingInstance.getVoter(t, {
             from: voter1,
           });
-          const votedProposal = receipt[2];
-          expect(votedProposal).to.not.equal(0);
+          expect(voter.hasVoted).to.equal(false);
+        });
+      });
+      testVoters.forEach(function (t) {
+        it(`checks that the ${t} voter votedProposalId is default value: 0`, async function () {
+          const voter = await votingInstance.getVoter(t, {
+            from: voter1,
+          });
+          expect(voter.votedProposalId).to.be.bignumber.equal(new BN(0));
         });
       });
     });

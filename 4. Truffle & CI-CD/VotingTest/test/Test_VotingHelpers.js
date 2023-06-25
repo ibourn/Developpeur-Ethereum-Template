@@ -37,7 +37,7 @@ module.exports = {
     return votingInstance;
   },
   mockEndProposal: async (votingInstance, owner, voter1, voter2, voter3) => {
-    await votingInstance.addProposal("first propsoal", {
+    await votingInstance.addProposal("first proposal", {
       from: voter1,
     });
     await votingInstance.addProposal("second proposal", {
