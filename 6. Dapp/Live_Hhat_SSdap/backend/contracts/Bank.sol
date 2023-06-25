@@ -14,7 +14,7 @@ contract Bank {
     mapping(address => uint) balances;
 
     /// @notice Allows to send Ethers to the smart contract
-    function sendEthers() external payable {
+    function sendEthers() public payable {
         if(msg.value < 1 wei) {
             revert Bank__NotEnoughFundsProvided();
         }
@@ -32,5 +32,12 @@ contract Bank {
         if(!received) {
             revert Bank__WithdrawFailed();
         }
+    }
+
+    fallback() external payable {
+        sendEthers();
+    }
+    receive() external payable {
+        sendEthers();
     }
 }
