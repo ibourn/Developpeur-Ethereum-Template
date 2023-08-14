@@ -4,6 +4,8 @@ pragma solidity 0.8.19;
 import "../node_modules/@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "../node_modules/@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 
+//VRF COURSE
+
 //version wrapperConsumer => permet paiement par request au lieu de passer par prefunding
 contract Chainlink2 is VRFConsumerBaseV2 {
   VRFCoordinatorV2Interface COORDINATOR;
