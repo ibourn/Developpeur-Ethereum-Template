@@ -2,7 +2,7 @@
 "use client";
 //rafce
 import React from "react";
-import { useThemeContext } from "../context/theme";
+import { useThemeContext } from "../../context/theme";
 
 const contact = () => {
   const { color, setColor } = useThemeContext();
@@ -13,7 +13,7 @@ const contact = () => {
       <button onClick={() => setColor("red")}>red</button>
       <button onClick={() => setColor("blue")}>blue</button>
       <button onClick={() => setColor("white")}>white</button>
-      <button onClick={() => setColor("lemon")}>lemon</button>
+      <button onClick={() => setColor("green")}>lemon</button>
     </>
   );
 };
