@@ -1,8 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
-contract SimpleStorage {
+import "openzeppelin-contracts/contracts/access/Ownable.sol";
+
+contract SimpleStorage is Ownable {
     uint256 private number;
+
+    constructor(uint256 _number) Ownable(msg.sender) {
+        number = _number;
+    }
 
     function setNumber(uint256 _number) external {
         number = _number;
@@ -27,9 +33,17 @@ forge --help
 
 anvil (ds 2nd terminal)
 ds autre terminal ds dossier forge, déploiement :
-forge create --rpc-url http://localhost:8545 --private-key 0xdbda1821b80551c9d65939329250298aa3472ba22feea921c0cf5d620ea67b97 src/SimpleStorage.sol:SimpleStorage
+forge create --rpc-url http://localhost:8545 --private-key LAPRIVATEKEY src/SimpleStorage.sol:SimpleStorage
 
-deploiement publique :
+deploiement publique manuel :
+charger le .env
+source .env
+
+chargement de lib externe :
+forge install OpenZeppelin/openzeppelin-contracts
+
+forge create --rpc-url $RPC_URL --constructor-args 3 --private-key $PRIVATE_KEY --etherscan-api-key $ETHERSCAN_API_KEY --verify src/SimpleStorage.sol:SimpleStorage
+
 
 
 
