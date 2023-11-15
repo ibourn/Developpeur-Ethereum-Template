@@ -1,0 +1,15 @@
+{
+  "description": "psycho cat",
+  "image": "QmXC9V3ko8MSSxWHrkoxmtfJ1FjsTAhwvJo31VLJYGVEKG/1.png",
+  "name": "psycho cat",
+  "attributes": [
+    {
+      "trait_type": "size",
+      "value": "small"
+    },
+    {
+      "trait_type": "color",
+      "value": "multi"
+    }
+  ]
+}

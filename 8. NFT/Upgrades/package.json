@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "hardhat": "^2.19.1"
+    "@openzeppelin/hardhat-upgrades": "^2.0.1",
+    "hardhat": "^2.14.0",
+    "npm": "^9.8.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",

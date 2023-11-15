@@ -45,7 +45,8 @@ contract InteractSimpleStorage is Script {
 2. METHODE scripting en solidity
 
 sudo apt-get update
-sudo apt-get install jq
+sudo apt-get install jq   
+(jq => json parser command line)
 
 forge install Cyfrin/foundry-devops
 (permet de récupérer le dernier contract déployé)

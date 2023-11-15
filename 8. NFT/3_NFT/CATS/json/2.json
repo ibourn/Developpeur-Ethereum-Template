@@ -1,0 +1,15 @@
+{
+  "description": "cool cat",
+  "image": "QmXC9V3ko8MSSxWHrkoxmtfJ1FjsTAhwvJo31VLJYGVEKG/2.png",
+  "name": "cool cat",
+  "attributes": [
+    {
+      "trait_type": "size",
+      "value": "big"
+    },
+    {
+      "trait_type": "color",
+      "value": "classic"
+    }
+  ]
+}
