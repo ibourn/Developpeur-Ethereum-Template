@@ -1,4 +1,5 @@
 name: VotingTestHHat Test on push to homework branch
+# update the name of the path
 # This workflow is triggered on pushes to the repository.
 # The workflow uses the `ubuntu-latest` action to run on a fresh
 # virtual machine hosted by GitHub.
@@ -10,7 +11,7 @@ on:
     branches:
       - "homework"
     paths:
-      - "4. Truffle & CI-CD/VotingTestHHat/**"
+      - "4. Outils Tests & CI-CD/**"
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -26,19 +27,19 @@ jobs:
         with:
           node-version: "16.16.0"
           cache: "npm"
-          cache-dependency-path: ./4. Truffle & CI-CD/VotingTestHHat/package-lock.json
+          cache-dependency-path: ./4. Outils Tests & CI-CD/VotingTestHHat/package-lock.json
       - uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-          path: .4. Truffle & CI-CD/VotingTestHHat/node_modules
+          path: .4. Outils Tests & CI-CD/VotingTestHHat/node_modules
           restore-keys: |
             ${{ runner.os }}-modules-
       - name: install dependencies
-        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npm install -g hardhat && npm install
+        run: cd "4. Outils Tests & CI-CD"/VotingTestHHat && npm install -g hardhat && npm install
       - name: harhat compile
-        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npx hardhat compile
+        run: cd "4. Outils Tests & CI-CD"/VotingTestHHat && npx hardhat compile
       - name: run tests
-        run: cd "4. Truffle & CI-CD"/VotingTestHHat && npx hardhat test
+        run: cd "4. Outils Tests & CI-CD"/VotingTestHHat && npx hardhat test
 
       - name: List files in the repository
         run: |
