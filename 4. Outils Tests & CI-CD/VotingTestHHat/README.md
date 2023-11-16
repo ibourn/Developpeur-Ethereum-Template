@@ -1,8 +1,9 @@
 # Sample Hardhat Project
+
 CHANGES TO TEST GA : '19'
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
-Try running some of  the following tasks:
+Try running some of the following tasks:
 
 ```shell
 npx hardhat help
